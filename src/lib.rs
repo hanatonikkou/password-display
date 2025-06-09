@@ -162,9 +162,9 @@ fn deflate(mut data: Vec<u8>) -> Vec<u8> {
     let length: u16 = data.len() as u16; // Length of uncompressed data
     let adler32 = calculate_adler32(&data); // Compute checksum
     let mut deflate_block: Vec<u8> = vec![
-        0x78,                         // Std. deflate header
-        0x01,                         // No compression
-        0x01,                         // Last block of stream
+        0x78,                         // Deflate header: Compression method
+        0x01,                         // Deflate header: No compr., checksum
+        0x01,                         // Block header: No compression, last block
         (length & 255) as u8,         // Length in two bytes
         (length >> 8) as u8,          // Little-endian order
         ((length & 255) as u8) ^ 255, // Length's one's complement
